@@ -4,14 +4,17 @@ import com.khrystyna.nerdysoft.exceptions.InvalidUserDetailsException;
 import com.khrystyna.nerdysoft.models.User;
 import com.khrystyna.nerdysoft.repository.UserRepository;
 import com.khrystyna.nerdysoft.service.interfaces.UserService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserServiceImpl(UserRepository userRepository) {
+    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -20,6 +23,7 @@ public class UserServiceImpl implements UserService {
             throw new InvalidUserDetailsException(String.format("Invalid User : [%s %s]",
                     user.getUsername(), user.getPassword()));
         }
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
     }
 

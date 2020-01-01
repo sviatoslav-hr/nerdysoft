@@ -13,7 +13,7 @@ import java.util.Date;
 @Component
 public class JwtProvider {
 
-    @Value("${bbqueue.app.jwtSecret:#{null}}")
+    @Value("${nerdysoft.app.jwtSecret:#{null}}")
     private String jwtSecret;
 
     public String generateJwtToken(Authentication authentication) {
