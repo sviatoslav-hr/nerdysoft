@@ -1,18 +1,18 @@
-package com.khrystyna.nerdysoft.models;
+package com.khrystyna.nerdysoft.dto;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.Id;
+
+import javax.validation.constraints.NotNull;
 
 @Data
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class User {
-    @Id
-    private String id;
+public class SignUpDto {
+    @NotNull
     private String username;
+
+    @NotNull
     private String password;
 }
