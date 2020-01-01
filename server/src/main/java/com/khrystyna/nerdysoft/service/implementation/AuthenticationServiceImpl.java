@@ -28,7 +28,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public JwtResponse attemptLogin(String username, String password) {
-        if (!userRepository.existsByUsername(username)) {
+        if (!userRepository.existsByEmail(username)) {
             throw new UsernameNotFoundException(
                     String.format("User [%s] does not exist", username));
         }

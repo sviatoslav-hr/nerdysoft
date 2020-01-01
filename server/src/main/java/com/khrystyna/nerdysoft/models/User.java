@@ -16,6 +16,11 @@ import org.springframework.data.annotation.Id;
 public class User extends AbstractUserDetails {
     @Id
     private String id;
-    private String username;
+    private String email;
     private String password;
+
+    @Override
+    public String getUsername() {
+        return email;
+    }
 }

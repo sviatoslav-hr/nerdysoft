@@ -27,13 +27,13 @@ public class AuthenticationController {
 
     @PostMapping("/sign-in")
     public JwtResponse signIn(@RequestBody SignInDto signInDto) {
-        return authenticationService.attemptLogin(signInDto.getUsername(), signInDto.getPassword());
+        return authenticationService.attemptLogin(signInDto.getEmail(), signInDto.getPassword());
     }
 
     @PostMapping("/sign-up")
     public ResponseEntity<Object> signUp(@RequestBody SignUpDto signUpDto) {
         userService.save(User.builder()
-                .username(signUpDto.getUsername())
+                .email(signUpDto.getEmail())
                 .password(signUpDto.getPassword())
                 .build());
         return ResponseEntity.ok().build();

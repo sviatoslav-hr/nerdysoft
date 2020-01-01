@@ -19,9 +19,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void save(User user) {
-        if (user.getUsername() == null || user.getPassword() == null) {
+        if (user.getEmail() == null || user.getPassword() == null) {
             throw new InvalidUserDetailsException(String.format("Invalid User : [%s %s]",
-                    user.getUsername(), user.getPassword()));
+                    user.getEmail(), user.getPassword()));
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);

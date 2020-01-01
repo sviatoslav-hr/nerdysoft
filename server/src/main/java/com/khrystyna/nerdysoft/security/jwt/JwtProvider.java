@@ -19,7 +19,7 @@ public class JwtProvider {
     public String generateJwtToken(Authentication authentication) {
         User principal = (User) authentication.getPrincipal();
         return Jwts.builder()
-                .setSubject((principal.getUsername()))
+                .setSubject((principal.getEmail()))
                 .setIssuedAt(new Date())
                 .signWith(SignatureAlgorithm.HS512, jwtSecret)
                 .compact();
