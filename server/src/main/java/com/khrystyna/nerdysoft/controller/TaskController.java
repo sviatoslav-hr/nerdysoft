@@ -6,6 +6,9 @@ import com.khrystyna.nerdysoft.service.interfaces.TaskService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Slf4j
 @RestController
 @RequestMapping(value = "/task")
@@ -24,6 +27,13 @@ public class TaskController {
     @GetMapping("/{taskId}")
     public TaskDto getTask(@PathVariable String taskId) {
         return TaskDto.of(taskService.findById(taskId));
+    }
+
+    @GetMapping
+    public List<TaskDto> getTasks() {
+        return taskService.findAllForPrincipal().stream()
+                .map(TaskDto::of)
+                .collect(Collectors.toList());
     }
 
     @DeleteMapping("/{taskId}")

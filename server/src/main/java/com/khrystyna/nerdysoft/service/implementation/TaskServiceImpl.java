@@ -2,29 +2,31 @@ package com.khrystyna.nerdysoft.service.implementation;
 
 import com.khrystyna.nerdysoft.dto.forms.TaskForm;
 import com.khrystyna.nerdysoft.exceptions.TaskNotFoundException;
-import com.khrystyna.nerdysoft.exceptions.UserNotFoundException;
 import com.khrystyna.nerdysoft.models.Task;
 import com.khrystyna.nerdysoft.models.User;
 import com.khrystyna.nerdysoft.repository.TaskRepository;
-import com.khrystyna.nerdysoft.repository.UserRepository;
+import com.khrystyna.nerdysoft.security.Principal;
 import com.khrystyna.nerdysoft.service.interfaces.TaskService;
+import com.khrystyna.nerdysoft.service.interfaces.UserService;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
+import java.util.List;
 
 @Service
 public class TaskServiceImpl implements TaskService {
-    private final UserRepository userRepository;
+    private final UserService userService;
     private final TaskRepository taskRepository;
 
-    public TaskServiceImpl(UserRepository userRepository, TaskRepository taskRepository) {
-        this.userRepository = userRepository;
+    public TaskServiceImpl(UserService userService, TaskRepository taskRepository) {
+        this.userService = userService;
         this.taskRepository = taskRepository;
     }
 
     public Task save(TaskForm taskForm) {
-        User author = userRepository.findById(taskForm.getAuthorId()).orElseThrow(
-                () -> new UserNotFoundException("User with id " + taskForm.getAuthorId() + " was not found"));
+        User author = userService.findById(taskForm.getAuthorId());
         Task task = taskForm.toTask();
         task.setAuthor(author);
         task.setUsers(Collections.singletonList(author));
@@ -42,5 +44,13 @@ public class TaskServiceImpl implements TaskService {
         Task task = findById(taskId);
         taskRepository.delete(task);
         return task;
+    }
+
+    @Override
+    public List<Task> findAllForPrincipal() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Principal principal = (Principal) authentication.getPrincipal();
+        User user = userService.findByEmail(principal.getUsername());
+        return taskRepository.findAllByUsersContains(user);
     }
 }
