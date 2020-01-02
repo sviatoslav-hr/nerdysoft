@@ -1,6 +1,7 @@
 package com.khrystyna.nerdysoft.service.implementation;
 
 import com.khrystyna.nerdysoft.exceptions.InvalidUserDetailsException;
+import com.khrystyna.nerdysoft.exceptions.OccupiedEmailException;
 import com.khrystyna.nerdysoft.exceptions.UserNotFoundException;
 import com.khrystyna.nerdysoft.models.User;
 import com.khrystyna.nerdysoft.repository.UserRepository;
@@ -23,6 +24,9 @@ public class UserServiceImpl implements UserService {
         if (user.getEmail() == null || user.getPassword() == null) {
             throw new InvalidUserDetailsException(String.format("Invalid User : [%s %s]",
                     user.getEmail(), user.getPassword()));
+        } else if (userRepository.existsByEmail(user.getEmail())) {
+            throw new OccupiedEmailException(String.format("User with email [%s] already exists",
+                    user.getEmail()));
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);

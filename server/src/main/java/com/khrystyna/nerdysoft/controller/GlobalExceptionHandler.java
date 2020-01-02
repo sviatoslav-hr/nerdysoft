@@ -1,6 +1,7 @@
 package com.khrystyna.nerdysoft.controller;
 
 import com.khrystyna.nerdysoft.exceptions.InvalidUserDetailsException;
+import com.khrystyna.nerdysoft.exceptions.OccupiedEmailException;
 import com.khrystyna.nerdysoft.exceptions.TaskNotFoundException;
 import com.khrystyna.nerdysoft.exceptions.UserNotFoundException;
 import org.springframework.http.HttpStatus;
@@ -20,6 +21,11 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(InvalidUserDetailsException.class)
     ResponseEntity<String> handleInvalidUserDetailsException(InvalidUserDetailsException ex) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+    }
+
+    @ExceptionHandler(OccupiedEmailException.class)
+    ResponseEntity<String> handleOccupiedEmailException(OccupiedEmailException ex) {
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
     }
 
     @ExceptionHandler(TaskNotFoundException.class)
