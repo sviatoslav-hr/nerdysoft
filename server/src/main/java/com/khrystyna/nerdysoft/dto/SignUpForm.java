@@ -7,9 +7,9 @@ import lombok.NoArgsConstructor;
 import javax.validation.constraints.NotNull;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
-public class SignInDto {
+@AllArgsConstructor
+public class SignUpForm {
     @NotNull
     private String email;
 

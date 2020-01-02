@@ -1,8 +1,8 @@
 package com.khrystyna.nerdysoft.controller;
 
 import com.khrystyna.nerdysoft.dto.JwtResponse;
-import com.khrystyna.nerdysoft.dto.SignInDto;
-import com.khrystyna.nerdysoft.dto.SignUpDto;
+import com.khrystyna.nerdysoft.dto.SignInForm;
+import com.khrystyna.nerdysoft.dto.SignUpForm;
 import com.khrystyna.nerdysoft.models.User;
 import com.khrystyna.nerdysoft.service.interfaces.AuthenticationService;
 import com.khrystyna.nerdysoft.service.interfaces.UserService;
@@ -26,15 +26,15 @@ public class AuthenticationController {
     }
 
     @PostMapping("/sign-in")
-    public JwtResponse signIn(@RequestBody SignInDto signInDto) {
-        return authenticationService.attemptLogin(signInDto.getEmail(), signInDto.getPassword());
+    public JwtResponse signIn(@RequestBody SignInForm signInForm) {
+        return authenticationService.attemptLogin(signInForm.getEmail(), signInForm.getPassword());
     }
 
     @PostMapping("/sign-up")
-    public ResponseEntity<Object> signUp(@RequestBody SignUpDto signUpDto) {
+    public ResponseEntity<Object> signUp(@RequestBody SignUpForm signUpForm) {
         userService.save(User.builder()
-                .email(signUpDto.getEmail())
-                .password(signUpDto.getPassword())
+                .email(signUpForm.getEmail())
+                .password(signUpForm.getPassword())
                 .build());
         return ResponseEntity.ok().build();
     }
