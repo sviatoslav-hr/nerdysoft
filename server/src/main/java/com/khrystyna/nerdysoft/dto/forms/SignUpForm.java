@@ -11,8 +11,9 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 public class SignUpForm {
     @NotNull
+    private String username;
+    @NotNull
     private String email;
-
     @NotNull
     private String password;
 }

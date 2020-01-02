@@ -1,6 +1,7 @@
 package com.khrystyna.nerdysoft.service.implementation;
 
 import com.khrystyna.nerdysoft.exceptions.InvalidUserDetailsException;
+import com.khrystyna.nerdysoft.exceptions.UserNotFoundException;
 import com.khrystyna.nerdysoft.models.User;
 import com.khrystyna.nerdysoft.repository.UserRepository;
 import com.khrystyna.nerdysoft.service.interfaces.UserService;
@@ -27,5 +28,9 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
     }
 
-
+    @Override
+    public User findByEmail(String email) {
+        return userRepository.findByEmail(email)
+                .orElseThrow(() -> new UserNotFoundException("User with email " + email + " was not found"));
+    }
 }

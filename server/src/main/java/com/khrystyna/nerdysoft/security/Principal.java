@@ -1,5 +1,6 @@
 package com.khrystyna.nerdysoft.security;
 
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -7,7 +8,14 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.Collections;
 
-public abstract class AbstractUserDetails implements UserDetails {
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+public class Principal implements UserDetails {
+    private String username;
+    private String password;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return Collections.singletonList(new SimpleGrantedAuthority(UserRole.USER.name()));

@@ -1,6 +1,6 @@
 package com.khrystyna.nerdysoft.security.jwt;
 
-import com.khrystyna.nerdysoft.models.User;
+import com.khrystyna.nerdysoft.security.Principal;
 import io.jsonwebtoken.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -17,9 +17,9 @@ public class JwtProvider {
     private String jwtSecret;
 
     public String generateJwtToken(Authentication authentication) {
-        User principal = (User) authentication.getPrincipal();
+        Principal principal = (Principal) authentication.getPrincipal();
         return Jwts.builder()
-                .setSubject((principal.getEmail()))
+                .setSubject((principal.getUsername()))
                 .setIssuedAt(new Date())
                 .signWith(SignatureAlgorithm.HS512, jwtSecret)
                 .compact();
