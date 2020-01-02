@@ -1,8 +1,8 @@
 package com.khrystyna.nerdysoft.controller;
 
 import com.khrystyna.nerdysoft.dto.JwtResponse;
-import com.khrystyna.nerdysoft.dto.SignInForm;
-import com.khrystyna.nerdysoft.dto.SignUpForm;
+import com.khrystyna.nerdysoft.dto.forms.SignInForm;
+import com.khrystyna.nerdysoft.dto.forms.SignUpForm;
 import com.khrystyna.nerdysoft.models.User;
 import com.khrystyna.nerdysoft.service.interfaces.AuthenticationService;
 import com.khrystyna.nerdysoft.service.interfaces.UserService;

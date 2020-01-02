@@ -1,4 +1,4 @@
-package com.khrystyna.nerdysoft.dto;
+package com.khrystyna.nerdysoft.dto.forms;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
