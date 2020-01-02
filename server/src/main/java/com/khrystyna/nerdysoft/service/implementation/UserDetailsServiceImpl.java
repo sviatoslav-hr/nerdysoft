@@ -1,9 +1,9 @@
 package com.khrystyna.nerdysoft.service.implementation;
 
+import com.khrystyna.nerdysoft.exceptions.UserNotFoundException;
 import com.khrystyna.nerdysoft.repository.UserRepository;
 import com.khrystyna.nerdysoft.service.interfaces.MongoUserDetailsService;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -17,6 +17,6 @@ public class UserDetailsServiceImpl implements MongoUserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) {
         return userRepository.findByEmail(username)
-                .orElseThrow(() -> new UsernameNotFoundException("User with username " + username + " was not found"));
+                .orElseThrow(() -> new UserNotFoundException("User with username " + username + " was not found"));
     }
 }
