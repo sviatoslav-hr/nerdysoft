@@ -1,0 +1,92 @@
+<form [formGroup]="form" class="sign-up-form row">
+
+  <!-- username input -->
+  <mat-form-field class="col-12" appearance="legacy">
+    <input matInput type="text" placeholder="Username" aria-label="Username"
+           formControlName="username">
+    <mat-error *ngIf="hasError('username', 'required'); else usernameErrors">
+      Username is required
+    </mat-error>
+    <ng-template #usernameErrors>
+      <mat-error *ngIf="hasError('username', 'pattern')">
+        Invalid name
+      </mat-error>
+    </ng-template>
+  </mat-form-field>
+
+  <!-- email input -->
+  <mat-form-field class="col-12" appearance="legacy">
+    <input matInput type="email" placeholder="Email" aria-label="Email"
+           formControlName="email" autocomplete="new-email">
+    <mat-error *ngIf="hasError('email', 'required'); else emailErrors">
+      Email is required
+    </mat-error>
+    <ng-template #emailErrors>
+      <mat-error *ngIf="hasError('email', 'email'); else emailOccupiedError">
+        Invalid email
+      </mat-error>
+      <ng-template #emailOccupiedError>
+        <mat-error *ngIf="hasError('email', 'occupied')">
+          Such email is already occupied
+        </mat-error>
+      </ng-template>
+    </ng-template>
+  </mat-form-field>
+
+  <!-- password input -->
+  <mat-form-field class="col-12" appearance="legacy">
+    <input matInput [type]="isPasswordShown? 'text': 'password'" placeholder="Password" aria-label="Password"
+           formControlName="password" autocomplete="new-password">
+    <i class="far cursor-pointer" *ngIf="form.controls.password.dirty"
+       [ngClass]="{'fa-eye': !isPasswordShown, 'fa-eye-slash': isPasswordShown}"
+       matSuffix (click)="isPasswordShown = !isPasswordShown"></i>
+    <mat-error *ngIf="form.controls.password.hasError('required'); else passwordErrors">
+      Password is required
+    </mat-error>
+    <ng-template #passwordErrors>
+      <mat-error *ngIf="hasError('password', 'pattern'); else passwordLengthError">
+        Use numbers, upper and lower case letters (e.g. 123Aa)
+      </mat-error>
+      <ng-template #passwordLengthError>
+        <mat-error *ngIf="hasError('password', 'minlength')">
+          Use 8 or more characters
+        </mat-error>
+      </ng-template>
+    </ng-template>
+  </mat-form-field>
+
+  <!-- confirm password input -->
+  <mat-form-field *ngIf="form.controls.password.dirty" class="col-12" appearance="legacy">
+    <input matInput [type]="isConfirmPasswordShown? 'text': 'password'" placeholder="Confirm password"
+           aria-label="Confirm password" formControlName="confirmPassword">
+    <i class="far cursor-pointer" *ngIf="form.controls.confirmPassword.dirty"
+       [ngClass]="{'fa-eye': !isConfirmPasswordShown, 'fa-eye-slash': isConfirmPasswordShown}"
+       matSuffix (click)="isConfirmPasswordShown = !isConfirmPasswordShown"></i>
+    <mat-error *ngIf="hasError('confirmPassword', 'required'); else confirmPasswordErrors">
+      Please confirm password
+    </mat-error>
+    <ng-template #confirmPasswordErrors>
+      <mat-error *ngIf="hasError('confirmPassword', 'mustMatch')">
+        Password does not match
+      </mat-error>
+    </ng-template>
+  </mat-form-field>
+
+  <!-- error message -->
+  <div class="container">
+    <div *ngIf="errorMessage" class="col-12 alert alert-danger px-3">
+      {{errorMessage}}
+    </div>
+  </div>
+
+  <!-- confirm button -->
+  <div class="col-12 pt-1">
+    <button class="btn btn-primary" (click)="signUp()" [disabled]="form.invalid || isLoading">
+    <span *ngIf="isLoading" class="spinner-border spinner-border-sm" role="status">
+      <span class="sr-only">Loading...</span>
+    </span>
+      Create account
+    </button>
+    <span class="text-primary" *ngIf="isSigningIn">Signing in...</span>
+  </div>
+</form>

@@ -1,0 +1,20 @@
+<div class="header bg-primary p-1">
+  <div class="container">
+    <button routerLink="/" class="btn btn-link text-light mr-2 logo text-decoration-none">Nerdysoft</button>
+    <div class="float-right h-100 d-inline-block align-middle">
+      <div *ngIf="!authService.isLogged; else logOutBtn">
+        <button (click)="showAuthModal(true)" class="btn btn-link text-light py-1">
+          Sign In
+        </button>
+        <button (click)="showAuthModal(false)" class="btn btn-outline-light py-1">
+          Sign Up
+        </button>
+      </div>
+      <ng-template #logOutBtn>
+        <button class="btn btn-outline-light" (click)="logOut()">
+          Sign Out <i class="fas fa-sign-out-alt"></i>
+        </button>
+      </ng-template>
+    </div>
+  </div>
+</div>

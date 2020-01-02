@@ -1,0 +1,61 @@
+<form [formGroup]="form" *ngIf="!showEmailVerification && !showPasswordRecovery">
+  <!-- email input -->
+  <mat-form-field class="col-12" appearance="legacy">
+    <input type="email" matInput aria-label="Email" placeholder="Email" formControlName="email">
+    <mat-error *ngIf="hasError('email', 'required'); else emailError">
+      Email is required
+    </mat-error>
+    <ng-template #emailError>
+      <mat-error *ngIf="hasError('email', 'email'); else emailNotExists">
+        Invalid email
+      </mat-error>
+      <ng-template #emailNotExists>
+        <mat-error *ngIf="hasError('email', 'notExists');">
+          User with such email does not exists
+        </mat-error>
+      </ng-template>
+    </ng-template>
+  </mat-form-field>
+
+  <!-- password input -->
+  <mat-form-field class="col-12" appearance="legacy">
+    <input [type]="isPasswordShown? 'text': 'password'" matInput aria-label="Password"
+           placeholder="Password" formControlName="password">
+    <i class="far cursor-pointer" *ngIf="form.controls.password.dirty"
+       [ngClass]="{'fa-eye': !isPasswordShown, 'fa-eye-slash': isPasswordShown}"
+       matSuffix (click)="isPasswordShown = !isPasswordShown"></i>
+    <mat-error *ngIf="hasError('password', 'required'); else passwordPatternError">
+      Password is required
+    </mat-error>
+    <ng-template #passwordPatternError>
+      <mat-error *ngIf="hasError('password', 'pattern'); else passwordWrong">
+        Invalid password
+      </mat-error>
+      <ng-template #passwordWrong>
+        <mat-error *ngIf="hasError('password', 'wrong')">
+          The password you've entered is wrong
+        </mat-error>
+      </ng-template>
+    </ng-template>
+  </mat-form-field>
+
+  <!-- alert -->
+  <div *ngIf="alert" class="col-12 container px-3">
+    <div class="alert" [ngClass]="'alert-' + alert.type" role="alert">
+      {{alert.message}}
+      <button type="button" class="close" (click)="alert = null" aria-label="close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- sign in button -->
+  <div class="col-12">
+    <button class="btn btn-primary" type="submit" (click)="signIn()" [disabled]="form.invalid || isLoading">
+    <span *ngIf="isLoading" class="spinner-border spinner-border-sm" role="status">
+      <span class="sr-only">Loading...</span>
+    </span>
+      Sign In
+    </button>
+  </div>
+</form>
