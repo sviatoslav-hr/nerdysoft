@@ -35,7 +35,6 @@ export class AuthenticationService {
   private requestPrincipal(): void {
     if (!this.signedInUser) {
       this.getAuthenticatedUser().subscribe(principal => {
-        console.log(principal);
         this.signedInUser = principal;
       }, () => {
         setTimeout(() => this.requestPrincipal(),
@@ -47,7 +46,6 @@ export class AuthenticationService {
   public signIn(form: SignInForm): Observable<JwtResponse> {
     return this.http.post<JwtResponse>(ApiUrls.SIGN_IN, form)
       .pipe(map(response => {
-        console.log(response);
         if (response.accessToken) {
           StorageHelper.token = response.accessToken;
           this.requestPrincipal();
