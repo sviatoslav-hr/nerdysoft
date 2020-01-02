@@ -5,4 +5,6 @@ import com.khrystyna.nerdysoft.models.Task;
 
 public interface TaskService {
     Task save(TaskForm taskForm);
+    Task findById(String taskId);
+    Task deleteById(String taskId);
 }

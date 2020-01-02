@@ -1,6 +1,7 @@
 package com.khrystyna.nerdysoft.service.implementation;
 
 import com.khrystyna.nerdysoft.dto.forms.TaskForm;
+import com.khrystyna.nerdysoft.exceptions.TaskNotFoundException;
 import com.khrystyna.nerdysoft.exceptions.UserNotFoundException;
 import com.khrystyna.nerdysoft.models.Task;
 import com.khrystyna.nerdysoft.models.User;
@@ -28,5 +29,18 @@ public class TaskServiceImpl implements TaskService {
         task.setAuthor(author);
         task.setUsers(Collections.singletonList(author));
         return taskRepository.save(task);
+    }
+
+    @Override
+    public Task findById(String taskId) {
+        return taskRepository.findById(taskId)
+                .orElseThrow(() -> new TaskNotFoundException("Task with id " + taskId + " was not found"));
+    }
+
+    @Override
+    public Task deleteById(String taskId) {
+        Task task = findById(taskId);
+        taskRepository.delete(task);
+        return task;
     }
 }
