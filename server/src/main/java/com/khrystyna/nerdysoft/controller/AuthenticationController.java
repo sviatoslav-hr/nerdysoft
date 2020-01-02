@@ -33,6 +33,7 @@ public class AuthenticationController {
     @PostMapping("/sign-up")
     public ResponseEntity<Object> signUp(@RequestBody SignUpForm signUpForm) {
         userService.save(User.builder()
+                .username(signUpForm.getUsername())
                 .email(signUpForm.getEmail())
                 .password(signUpForm.getPassword())
                 .build());
