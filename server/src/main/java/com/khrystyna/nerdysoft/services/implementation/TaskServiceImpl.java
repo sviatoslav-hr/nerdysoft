@@ -42,7 +42,13 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public Task deleteById(String taskId) {
         Task task = findById(taskId);
-        taskRepository.delete(task);
+        User user = authenticationService.getAuthenticatedUser();
+        if (task.getAuthor().getId().equals(user.getId())) {
+            taskRepository.delete(task);
+        } else {
+            task.getUsers().remove(user);
+            taskRepository.save(task);
+        }
         return task;
     }
 
