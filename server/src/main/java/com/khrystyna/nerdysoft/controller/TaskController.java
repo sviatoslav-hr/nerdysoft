@@ -36,6 +36,7 @@ public class TaskController {
                 .collect(Collectors.toList());
     }
 
+    @PostMapping("/{taskId}")
     @DeleteMapping("/{taskId}")
     public TaskDto deleteTask(@PathVariable String taskId) {
         return TaskDto.of(taskService.deleteById(taskId));
