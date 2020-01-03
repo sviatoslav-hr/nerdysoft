@@ -1,0 +1,33 @@
+<div class="input-group container">
+  <input type="text" class="form-control" [(ngModel)]="taskForm.title" aria-label="Title"><br>
+  <textarea type="text" class="form-control" [(ngModel)]="taskForm.description" aria-label="Description"></textarea>
+  <button class="btn" (click)="saveTask()">Save</button>
+</div>
+
+<div class="container" *ngIf="sharedTasks">
+  <div *ngFor="let sharedTask of sharedTasks">
+    <p>
+      <b>{{sharedTask.task.title}}</b>
+      <button class="ml-1 btn btn-outline-success" (click)="acceptTask(sharedTask.task.id)">v</button>
+      <button class="ml-1 btn btn-outline-danger" (click)="declineTask(sharedTask.task.id)">x</button>
+    </p>
+    <p>{{sharedTask.sender.username}}</p>
+  </div>
+</div>
+<div class="container-fluid row mt-2" *ngIf="tasks">
+  <div *ngFor="let task of tasks" class="col-4 col-md">
+    <p>
+      <b>{{task.title}}</b>
+      <button class="ml-1 btn btn-outline-danger" (click)="deleteTask(task.id)">x</button>
+    </p>
+    <p>{{task.id}}</p>
+    <p>{{task.description}}</p>
+    <p>{{task.author.username}}</p>
+    <p>{{task.dateTime}}</p>
+    <button class="btn btn-outline-secondary" (click)="task.share = !task.share">{{task.share? 'hide':'share'}}</button>
+    <div *ngIf="task.share">
+      <input type="email" class="form-control" aria-label="share to" #emailToShare>
+      <button class="btn btn-outline-primary" (click)="shareTask(task.id, emailToShare.value)">Share</button>
+    </div>
+  </div>
+</div>

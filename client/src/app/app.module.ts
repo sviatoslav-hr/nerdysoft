@@ -14,6 +14,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientModule} from '@angular/common/http';
 import {MatFormFieldModule, MatInputModule} from '@angular/material';
 import { HeaderComponent } from './components/header/header.component';
+import { TaskComponent } from './components/task/task.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { HeaderComponent } from './components/header/header.component';
     AuthenticationComponent,
     SignInComponent,
     SignUpComponent,
-    HeaderComponent
+    HeaderComponent,
+    TaskComponent
   ],
   imports: [
     BrowserModule,
