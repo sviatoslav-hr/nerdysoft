@@ -1,7 +1,7 @@
 package com.khrystyna.nerdysoft.controllers;
 
 import com.khrystyna.nerdysoft.models.User;
-import com.khrystyna.nerdysoft.security.Principal;
+import com.khrystyna.nerdysoft.configs.security.Principal;
 import com.khrystyna.nerdysoft.services.interfaces.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;

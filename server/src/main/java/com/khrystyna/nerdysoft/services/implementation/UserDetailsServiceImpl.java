@@ -3,7 +3,7 @@ package com.khrystyna.nerdysoft.services.implementation;
 import com.khrystyna.nerdysoft.exceptions.UserNotFoundException;
 import com.khrystyna.nerdysoft.models.User;
 import com.khrystyna.nerdysoft.repository.UserRepository;
-import com.khrystyna.nerdysoft.security.Principal;
+import com.khrystyna.nerdysoft.configs.security.Principal;
 import com.khrystyna.nerdysoft.services.interfaces.MongoUserDetailsService;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;

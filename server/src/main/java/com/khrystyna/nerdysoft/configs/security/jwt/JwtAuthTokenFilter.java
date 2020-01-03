@@ -1,4 +1,4 @@
-package com.khrystyna.nerdysoft.security.jwt;
+package com.khrystyna.nerdysoft.configs.security.jwt;
 
 import com.khrystyna.nerdysoft.services.implementation.UserDetailsServiceImpl;
 import lombok.extern.slf4j.Slf4j;

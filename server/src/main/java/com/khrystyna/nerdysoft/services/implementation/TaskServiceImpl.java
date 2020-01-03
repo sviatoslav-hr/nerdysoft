@@ -1,17 +1,18 @@
 package com.khrystyna.nerdysoft.services.implementation;
 
+import com.khrystyna.nerdysoft.configs.security.Principal;
 import com.khrystyna.nerdysoft.dto.forms.TaskForm;
 import com.khrystyna.nerdysoft.exceptions.TaskNotFoundException;
 import com.khrystyna.nerdysoft.models.Task;
 import com.khrystyna.nerdysoft.models.User;
 import com.khrystyna.nerdysoft.repository.TaskRepository;
-import com.khrystyna.nerdysoft.security.Principal;
 import com.khrystyna.nerdysoft.services.interfaces.TaskService;
 import com.khrystyna.nerdysoft.services.interfaces.UserService;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 
@@ -30,6 +31,7 @@ public class TaskServiceImpl implements TaskService {
         Task task = taskForm.toTask();
         task.setAuthor(author);
         task.setUsers(Collections.singletonList(author));
+        task.setDateTime(LocalDateTime.now());
         return taskRepository.save(task);
     }
 
@@ -51,6 +53,6 @@ public class TaskServiceImpl implements TaskService {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Principal principal = (Principal) authentication.getPrincipal();
         User user = userService.findByEmail(principal.getUsername());
-        return taskRepository.findAllByUsersContains(user);
+        return taskRepository.findAllByUsersContainsOrderByDateTimeDesc(user);
     }
 }

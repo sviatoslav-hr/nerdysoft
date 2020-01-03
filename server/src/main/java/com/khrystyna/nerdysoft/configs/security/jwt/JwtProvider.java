@@ -1,6 +1,6 @@
-package com.khrystyna.nerdysoft.security.jwt;
+package com.khrystyna.nerdysoft.configs.security.jwt;
 
-import com.khrystyna.nerdysoft.security.Principal;
+import com.khrystyna.nerdysoft.configs.security.Principal;
 import io.jsonwebtoken.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;

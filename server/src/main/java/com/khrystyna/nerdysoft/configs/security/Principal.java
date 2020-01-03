@@ -1,4 +1,4 @@
-package com.khrystyna.nerdysoft.security;
+package com.khrystyna.nerdysoft.configs.security;
 
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;

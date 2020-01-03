@@ -15,6 +15,7 @@ public class TaskDto {
     private String id;
     private String title;
     private String description;
+    private String dateTime;
     private User author;
     private List<User> users;
 
@@ -22,6 +23,7 @@ public class TaskDto {
         this.id = task.getId();
         this.title = task.getTitle();
         this.description = task.getDescription();
+        this.dateTime = task.getDateTime().toString();
         this.author = task.getAuthor();
         this.users = task.getUsers();
     }

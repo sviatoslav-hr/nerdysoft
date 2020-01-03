@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
@@ -18,6 +19,7 @@ public class Task {
     private String id;
     private String title;
     private String description;
+    private LocalDateTime dateTime;
     @DBRef
     private User author;
     @DBRef
