@@ -1,15 +1,11 @@
 package com.khrystyna.nerdysoft.services.implementation;
 
-import com.khrystyna.nerdysoft.configs.security.Principal;
-import com.khrystyna.nerdysoft.dto.forms.TaskForm;
 import com.khrystyna.nerdysoft.exceptions.TaskNotFoundException;
 import com.khrystyna.nerdysoft.models.Task;
 import com.khrystyna.nerdysoft.models.User;
 import com.khrystyna.nerdysoft.repository.TaskRepository;
+import com.khrystyna.nerdysoft.services.interfaces.AuthenticationService;
 import com.khrystyna.nerdysoft.services.interfaces.TaskService;
-import com.khrystyna.nerdysoft.services.interfaces.UserService;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -18,19 +14,21 @@ import java.util.List;
 
 @Service
 public class TaskServiceImpl implements TaskService {
-    private final UserService userService;
     private final TaskRepository taskRepository;
+    private final AuthenticationService authenticationService;
 
-    public TaskServiceImpl(UserService userService, TaskRepository taskRepository) {
-        this.userService = userService;
+    public TaskServiceImpl(TaskRepository taskRepository,
+                           AuthenticationService authenticationService) {
         this.taskRepository = taskRepository;
+        this.authenticationService = authenticationService;
     }
 
-    public Task save(TaskForm taskForm) {
-        User author = userService.findById(taskForm.getAuthorId());
-        Task task = taskForm.toTask();
-        task.setAuthor(author);
-        task.setUsers(Collections.singletonList(author));
+    public Task save(Task task) {
+        if (task.getAuthor() == null) {
+            User author = authenticationService.getAuthenticatedUser();
+            task.setAuthor(author);
+            task.setUsers(Collections.singletonList(author));
+        }
         task.setDateTime(LocalDateTime.now());
         return taskRepository.save(task);
     }
@@ -50,9 +48,7 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public List<Task> findAllForPrincipal() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        Principal principal = (Principal) authentication.getPrincipal();
-        User user = userService.findByEmail(principal.getUsername());
+        User user = authenticationService.getAuthenticatedUser();
         return taskRepository.findAllByUsersContainsOrderByDateTimeDesc(user);
     }
 }

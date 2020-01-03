@@ -14,7 +14,6 @@ public class TaskForm {
     private String id;
     private String title;
     private String description;
-    private String authorId;
     private List<String> usersIds;
 
     public Task toTask() {

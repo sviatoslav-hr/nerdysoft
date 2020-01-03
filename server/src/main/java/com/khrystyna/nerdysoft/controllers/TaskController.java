@@ -2,7 +2,10 @@ package com.khrystyna.nerdysoft.controllers;
 
 import com.khrystyna.nerdysoft.dto.TaskDto;
 import com.khrystyna.nerdysoft.dto.forms.TaskForm;
+import com.khrystyna.nerdysoft.dto.forms.TaskShareForm;
+import com.khrystyna.nerdysoft.models.TaskSharing;
 import com.khrystyna.nerdysoft.services.interfaces.TaskService;
+import com.khrystyna.nerdysoft.services.interfaces.TaskSharingService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,14 +17,16 @@ import java.util.stream.Collectors;
 @RequestMapping(value = "/task")
 public class TaskController {
     private final TaskService taskService;
+    private final TaskSharingService taskSharingService;
 
-    public TaskController(TaskService taskService) {
+    public TaskController(TaskService taskService, TaskSharingService taskSharingService) {
         this.taskService = taskService;
+        this.taskSharingService = taskSharingService;
     }
 
     @PostMapping
     public TaskDto save(@RequestBody TaskForm taskForm) {
-        return TaskDto.of(taskService.save(taskForm));
+        return TaskDto.of(taskService.save(taskForm.toTask()));
     }
 
     @GetMapping("/{taskId}")
@@ -41,4 +46,25 @@ public class TaskController {
     public TaskDto deleteTask(@PathVariable String taskId) {
         return TaskDto.of(taskService.deleteById(taskId));
     }
+
+    @PostMapping("/share")
+    public TaskSharing shareTask(@RequestBody TaskShareForm form) {
+        return taskSharingService.shareTask(form.getTaskId(), form.getReceiverEmail());
+    }
+
+    @PostMapping("/accept/{taskId}")
+    public void acceptTask(@PathVariable String taskId) {
+        taskSharingService.acceptTask(taskId);
+    }
+
+    @PostMapping("/decline/{taskId}")
+    public void declineTask(@PathVariable String taskId) {
+        taskSharingService.declineTask(taskId);
+    }
+
+    @GetMapping("/shared")
+    public List<TaskSharing> shared() {
+        return taskSharingService.findSharedTasks();
+    }
+
 }

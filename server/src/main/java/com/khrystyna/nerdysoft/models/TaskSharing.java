@@ -5,26 +5,22 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 
 import java.time.LocalDateTime;
-import java.util.LinkedList;
-import java.util.List;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Task {
+public class TaskSharing {
     @Id
     private String id;
-    private String title;
-    private String description;
-    @LastModifiedDate
+    @DBRef
+    private Task task;
+    @DBRef
+    private User sender;
+    @DBRef
+    private User receiver;
     private LocalDateTime dateTime;
-    @DBRef
-    private User author;
-    @DBRef
-    private List<User> users = new LinkedList<>();
 }

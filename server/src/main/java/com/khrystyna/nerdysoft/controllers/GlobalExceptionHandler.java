@@ -30,7 +30,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(TaskNotFoundException.class)
     ResponseEntity<String> handleTaskNotFoundException(TaskNotFoundException ex) {
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
     }
 
 }

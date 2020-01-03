@@ -1,13 +1,12 @@
 package com.khrystyna.nerdysoft.services.interfaces;
 
-import com.khrystyna.nerdysoft.dto.forms.TaskForm;
 import com.khrystyna.nerdysoft.models.Task;
 
 import java.util.List;
 
 public interface TaskService {
 
-    Task save(TaskForm taskForm);
+    Task save(Task task);
 
     Task findById(String taskId);
 
