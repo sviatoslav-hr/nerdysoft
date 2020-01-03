@@ -1,6 +1,6 @@
 package com.khrystyna.nerdysoft.security.jwt;
 
-import com.khrystyna.nerdysoft.service.implementation.UserDetailsServiceImpl;
+import com.khrystyna.nerdysoft.services.implementation.UserDetailsServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

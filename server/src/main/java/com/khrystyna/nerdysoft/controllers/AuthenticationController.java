@@ -1,11 +1,11 @@
-package com.khrystyna.nerdysoft.controller;
+package com.khrystyna.nerdysoft.controllers;
 
 import com.khrystyna.nerdysoft.dto.JwtResponse;
 import com.khrystyna.nerdysoft.dto.forms.SignInForm;
 import com.khrystyna.nerdysoft.dto.forms.SignUpForm;
 import com.khrystyna.nerdysoft.models.User;
-import com.khrystyna.nerdysoft.service.interfaces.AuthenticationService;
-import com.khrystyna.nerdysoft.service.interfaces.UserService;
+import com.khrystyna.nerdysoft.services.interfaces.AuthenticationService;
+import com.khrystyna.nerdysoft.services.interfaces.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;

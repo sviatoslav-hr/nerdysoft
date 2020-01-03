@@ -1,10 +1,10 @@
-package com.khrystyna.nerdysoft.service.implementation;
+package com.khrystyna.nerdysoft.services.implementation;
 
 import com.khrystyna.nerdysoft.dto.JwtResponse;
 import com.khrystyna.nerdysoft.exceptions.UserNotFoundException;
 import com.khrystyna.nerdysoft.repository.UserRepository;
 import com.khrystyna.nerdysoft.security.jwt.JwtProvider;
-import com.khrystyna.nerdysoft.service.interfaces.AuthenticationService;
+import com.khrystyna.nerdysoft.services.interfaces.AuthenticationService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

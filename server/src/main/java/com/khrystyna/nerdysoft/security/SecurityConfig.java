@@ -2,7 +2,7 @@ package com.khrystyna.nerdysoft.security;
 
 import com.khrystyna.nerdysoft.security.jwt.JwtAuthEntryPoint;
 import com.khrystyna.nerdysoft.security.jwt.JwtAuthTokenFilter;
-import com.khrystyna.nerdysoft.service.interfaces.MongoUserDetailsService;
+import com.khrystyna.nerdysoft.services.interfaces.MongoUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;

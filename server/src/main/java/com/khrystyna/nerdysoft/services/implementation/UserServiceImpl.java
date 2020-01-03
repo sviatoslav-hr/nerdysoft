@@ -1,11 +1,11 @@
-package com.khrystyna.nerdysoft.service.implementation;
+package com.khrystyna.nerdysoft.services.implementation;
 
 import com.khrystyna.nerdysoft.exceptions.InvalidUserDetailsException;
 import com.khrystyna.nerdysoft.exceptions.OccupiedEmailException;
 import com.khrystyna.nerdysoft.exceptions.UserNotFoundException;
 import com.khrystyna.nerdysoft.models.User;
 import com.khrystyna.nerdysoft.repository.UserRepository;
-import com.khrystyna.nerdysoft.service.interfaces.UserService;
+import com.khrystyna.nerdysoft.services.interfaces.UserService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 

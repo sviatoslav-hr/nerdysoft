@@ -1,4 +1,4 @@
-package com.khrystyna.nerdysoft.service.implementation;
+package com.khrystyna.nerdysoft.services.implementation;
 
 import com.khrystyna.nerdysoft.dto.forms.TaskForm;
 import com.khrystyna.nerdysoft.exceptions.TaskNotFoundException;
@@ -6,8 +6,8 @@ import com.khrystyna.nerdysoft.models.Task;
 import com.khrystyna.nerdysoft.models.User;
 import com.khrystyna.nerdysoft.repository.TaskRepository;
 import com.khrystyna.nerdysoft.security.Principal;
-import com.khrystyna.nerdysoft.service.interfaces.TaskService;
-import com.khrystyna.nerdysoft.service.interfaces.UserService;
+import com.khrystyna.nerdysoft.services.interfaces.TaskService;
+import com.khrystyna.nerdysoft.services.interfaces.UserService;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;

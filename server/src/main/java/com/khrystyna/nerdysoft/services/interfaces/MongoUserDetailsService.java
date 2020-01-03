@@ -1,4 +1,4 @@
-package com.khrystyna.nerdysoft.service.interfaces;
+package com.khrystyna.nerdysoft.services.interfaces;
 
 import org.springframework.security.core.userdetails.UserDetailsService;
 

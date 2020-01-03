@@ -1,4 +1,4 @@
-package com.khrystyna.nerdysoft.controller;
+package com.khrystyna.nerdysoft.controllers;
 
 import com.khrystyna.nerdysoft.exceptions.InvalidUserDetailsException;
 import com.khrystyna.nerdysoft.exceptions.OccupiedEmailException;

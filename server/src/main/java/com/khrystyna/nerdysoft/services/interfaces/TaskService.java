@@ -1,4 +1,4 @@
-package com.khrystyna.nerdysoft.service.interfaces;
+package com.khrystyna.nerdysoft.services.interfaces;
 
 import com.khrystyna.nerdysoft.dto.forms.TaskForm;
 import com.khrystyna.nerdysoft.models.Task;

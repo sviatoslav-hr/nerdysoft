@@ -1,8 +1,8 @@
-package com.khrystyna.nerdysoft.controller;
+package com.khrystyna.nerdysoft.controllers;
 
 import com.khrystyna.nerdysoft.dto.TaskDto;
 import com.khrystyna.nerdysoft.dto.forms.TaskForm;
-import com.khrystyna.nerdysoft.service.interfaces.TaskService;
+import com.khrystyna.nerdysoft.services.interfaces.TaskService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
