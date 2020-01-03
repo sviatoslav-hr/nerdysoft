@@ -1,0 +1,47 @@
+.delete-task-button {
+  padding: 2px 8px;
+  margin-right: 2px;
+}
+
+.edit-task-button {
+  padding: 2px 8px;
+}
+
+.description {
+  white-space: pre-wrap;
+}
+
+.task-title {
+  margin-right: 75px;
+  font-size: 14pt;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.task-author {
+  /*font-size: 8pt;*/
+}
+
+.task-last-edit {
+  font-size: 10pt;
+  margin-bottom: 0;
+}
+
+.task-buttons {
+  position: absolute;
+  top: 9px;
+  right: 9px;
+}
+
+.row.make-columns {
+  -moz-column-width: 19em;
+  -webkit-column-width: 19em;
+  -moz-column-gap: 1em;
+  -webkit-column-gap:1em;
+}
+.row.make-columns > div {
+  display: inline-block;
+  padding:  .5rem;
+  width:  100%;
+}

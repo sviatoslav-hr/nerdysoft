@@ -4,7 +4,8 @@ import {TaskService} from '../../services/task.service';
 import {AuthenticationService} from '../../services/authentication/authentication.service';
 import {Task} from 'src/app/models/entity/task';
 import {TaskSharing} from '../../models/entity/task-sharing';
-import {equals} from '../../helpers/equals';
+import {faCheck, faEdit, faTimes} from '@fortawesome/free-solid-svg-icons';
+import * as deepEqual from 'deep-equal';
 
 @Component({
   selector: 'app-task',
@@ -12,6 +13,11 @@ import {equals} from '../../helpers/equals';
   styleUrls: ['./task.component.css']
 })
 export class TaskComponent implements OnInit {
+  icons = {
+    faTimes,
+    faCheck,
+    faEdit
+  };
   taskForm: TaskForm;
   tasks: Task[];
   sharedTasks: TaskSharing[];
@@ -24,7 +30,6 @@ export class TaskComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getTasks();
     this.getSharedTasks();
   }
 
@@ -55,8 +60,8 @@ export class TaskComponent implements OnInit {
 
   private getSharedTasks() {
     this.taskService.getAllShared().subscribe(sharedTasks => {
-      if (!equals(this.sharedTasks, sharedTasks)) {
-        sharedTasks.forEach(value => value.dateTime = new Date(value.dateTime));
+      sharedTasks.forEach(value => value.dateTime = new Date(value.dateTime));
+      if (!this.sharedTasks || !deepEqual(this.sharedTasks, sharedTasks)) {
         this.sharedTasks = sharedTasks;
         this.getTasks();
       }

@@ -15,6 +15,7 @@ import {HttpClientModule} from '@angular/common/http';
 import {MatFormFieldModule, MatInputModule} from '@angular/material';
 import { HeaderComponent } from './components/header/header.component';
 import { TaskComponent } from './components/task/task.component';
+import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { TaskComponent } from './components/task/task.component';
     ReactiveFormsModule,
     BrowserAnimationsModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    FontAwesomeModule
   ],
   providers: [
     httpInterceptorProviders
