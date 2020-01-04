@@ -20,8 +20,8 @@
     </p>
   </div>
 </div>
-<div class="row make-columns container-fluid mx-0 mt-2 px-3" *ngIf="tasks">
-  <div *ngFor="let task of tasks" class="col-12 col-md-4 p-0 h-auto">
+<div class="row container-fluid mx-0 mt-2 px-3 pb-1 task-container" *ngIf="tasks">
+  <div *ngFor="let task of tasks" class="col-12 col-md-4 p-0">
     <div class="task-buttons">
       <button class="ml-1 btn btn-outline-secondary edit-task-button" (click)="null">
         <fa-icon [icon]="icons.faEdit"></fa-icon>
@@ -30,22 +30,23 @@
         <fa-icon [icon]="icons.faTimes"></fa-icon>
       </button>
     </div>
-    <div class="m-1 py-1 px-2 border border-secondary rounded">
+    <div class="m-1 py-1 px-2 task-card-body pb-2">
       <p class="task-title border-bottom border-secondary text-dark">{{task.title}}</p>
-      <p class="description p-1 bg-light text-secondary">{{task.description}}</p>
+      <p class="description text-secondary py-1 px-2">{{task.description}}</p>
       <p class="text-muted task-last-edit">
         <span class="text-primary task-author">{{task.author.username}}</span>,
         last edit: {{task.dateTime | date:'short'}}
       </p>
-      <button *ngIf="!task.share" class="btn btn-outline-primary mt-1 py-0 px-2" (click)="task.share = true">
+      <button *ngIf="!task.share" class="btn btn-outline-primary mt-1 py-0 px-2 d-inline" (click)="task.share = true">
         Share <fa-icon [icon]="icons.faShare"></fa-icon>
       </button>
       <div *ngIf="task.share" class="px-2 border-top border-secondary pt-2">
-        <input type="email" class="form-control" aria-label="share to" #emailToShare placeholder="Type email...">
-        <button class="btn btn-outline-primary py-0 px-2" (click)="shareTask(task.id, emailToShare.value)">
+        <input type="email" class="form-control mb-1" aria-label="share to" #shareInput placeholder="Type email...">
+        <button class="btn btn-outline-primary py-0 px-2" [disabled]="!shareInput.checkValidity()"
+                (click)="shareTask(task.id, shareInput.value)">
           Share
         </button>
-        <button class="btn btn-link text-secondary" (click)="task.share = false">
+        <button class="btn btn-link text-secondary px-2 py-0" (click)="task.share = false">
           Cancel
         </button>
       </div>
