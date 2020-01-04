@@ -20,8 +20,10 @@ export class TaskComponent implements OnInit {
     faShare
   };
   taskForm: TaskForm;
+  editTaskForm: TaskForm;
   tasks: Task[];
   sharedTasks: TaskSharing[];
+  isTaskEditing = false;
 
   constructor(
     private taskService: TaskService,
@@ -55,6 +57,14 @@ export class TaskComponent implements OnInit {
   private deleteTask(taskId: string) {
     this.taskService.delete(taskId).subscribe(deletedTask => {
       console.log(deletedTask);
+      this.getTasks();
+    }, error => console.log(error));
+  }
+
+  private saveEditedTask(task: Task) {
+    this.taskService.save(this.editTaskForm).subscribe(editedTask => {
+      console.log(editedTask);
+      this.cancelTaskEditing(task);
       this.getTasks();
     }, error => console.log(error));
   }
@@ -94,5 +104,20 @@ export class TaskComponent implements OnInit {
       console.log(data);
       this.getTasks();
     }, error => console.log(error));
+  }
+
+  private editTask(task: Task) {
+    task.edit = true;
+    this.editTaskForm = new TaskForm();
+    this.editTaskForm.id = task.id;
+    this.editTaskForm.title = task.title;
+    this.editTaskForm.description = task.description + '1';
+    this.isTaskEditing = true;
+  }
+
+  cancelTaskEditing(task: Task) {
+    task.edit = false;
+    this.editTaskForm = null;
+    this.isTaskEditing = false;
   }
 }

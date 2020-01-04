@@ -4,6 +4,7 @@
   <button class="btn" (click)="saveTask()">Save</button>
 </div>
 
+<!-- shared tasks container -->
 <div class="row container-fluid mx-0 px-3" *ngIf="sharedTasks">
   <div *ngFor="let sharedTask of sharedTasks" class="col-12 col-md-6 p-1">
     <p><b>{{sharedTask.sender.username}}</b> has shared task with you:</p>
@@ -12,43 +13,70 @@
     </p>
     <p>
       <button class="btn btn-outline-success" (click)="acceptTask(sharedTask.task.id)">
-        Accept <fa-icon [icon]="icons.faCheck"></fa-icon>
+        Accept
+        <fa-icon [icon]="icons.faCheck"></fa-icon>
       </button>
       <button class="ml-1 btn btn-outline-danger" (click)="declineTask(sharedTask.task.id)">
-        Decline <fa-icon [icon]="icons.faTimes"></fa-icon>
+        Decline
+        <fa-icon [icon]="icons.faTimes"></fa-icon>
       </button>
     </p>
   </div>
 </div>
+
+<!-- tasks container -->
 <div class="row container-fluid mx-0 mt-2 px-3 pb-1 task-container" *ngIf="tasks">
-  <div *ngFor="let task of tasks" class="col-12 col-md-4 p-0">
+  <div *ngFor="let task of tasks" class="col-12 col-md-6 col-xl-4 p-0">
     <div class="task-buttons">
-      <button class="ml-1 btn btn-outline-secondary edit-task-button" (click)="null">
+      <button class="ml-1 btn btn-outline-secondary edit-task-button" [disabled]="isTaskEditing"
+              (click)="editTask(task)">
         <fa-icon [icon]="icons.faEdit"></fa-icon>
       </button>
       <button class="ml-1 btn btn-outline-danger delete-task-button" (click)="deleteTask(task.id)">
         <fa-icon [icon]="icons.faTimes"></fa-icon>
       </button>
     </div>
+
+    <!-- task body -->
     <div class="m-1 py-1 px-2 task-card-body pb-2">
-      <p class="task-title border-bottom border-secondary text-dark">{{task.title}}</p>
-      <p class="description text-secondary py-1 px-2">{{task.description}}</p>
-      <p class="text-muted task-last-edit">
+      <!-- title -->
+      <p class="task-title border-bottom border-secondary text-dark mb-2">{{task.title}}</p>
+      <!-- description -->
+      <p class="description text-secondary py-1 px-2 rounded">{{task.description}}</p>
+      <!-- author & last edit time -->
+      <div class="text-muted task-last-edit d-inline-block">
         <span class="text-primary task-author">{{task.author.username}}</span>,
-        last edit: {{task.dateTime | date:'short'}}
-      </p>
-      <button *ngIf="!task.share" class="btn btn-outline-primary mt-1 py-0 px-2 d-inline" (click)="task.share = true">
-        Share <fa-icon [icon]="icons.faShare"></fa-icon>
-      </button>
-      <div *ngIf="task.share" class="px-2 border-top border-secondary pt-2">
-        <input type="email" class="form-control mb-1" aria-label="share to" #shareInput placeholder="Type email...">
-        <button class="btn btn-outline-primary py-0 px-2" [disabled]="!shareInput.checkValidity()"
-                (click)="shareTask(task.id, shareInput.value)">
-          Share
+        <div class="d-block">last edit: {{task.dateTime | date:'short'}}</div>
+      </div>
+
+      <!-- edit task buttons -->
+      <div *ngIf="task.edit">
+        <button class="btn btn-outline-success mt-1 py-0 px-2 d-inline"
+                (click)="saveEditedTask(task)">
+          Save
         </button>
-        <button class="btn btn-link text-secondary px-2 py-0" (click)="task.share = false">
+        <button class="btn btn-link text-secondary px-2 py-0" (click)="cancelTaskEditing(task)">
           Cancel
         </button>
+      </div>
+
+      <!-- share task buttons -->
+      <div *ngIf="!task.edit ">
+        <button *ngIf="!task.share" class="btn btn-outline-primary mt-1 py-0 px-2 d-inline"
+                (click)="task.share = true">
+          Share
+          <fa-icon [icon]="icons.faShare"></fa-icon>
+        </button>
+        <div *ngIf="task.share" class="px-2 border-top border-secondary pt-2">
+          <input type="email" class="form-control mb-1" aria-label="share to" #shareInput placeholder="Type email...">
+          <button class="btn btn-outline-primary py-0 px-2" [disabled]="!shareInput.checkValidity()"
+                  (click)="shareTask(task.id, shareInput.value)">
+            Share
+          </button>
+          <button class="btn btn-link text-secondary px-2 py-0" (click)="task.share = false">
+            Cancel
+          </button>
+        </div>
       </div>
 
     </div>

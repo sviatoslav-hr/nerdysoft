@@ -7,7 +7,9 @@ export class Task {
     public description?: string,
     public dateTime?: Date,
     public author?: User,
-    public users?: User[]
+    public users?: User[],
+    public share = false,
+    public edit = false
   ) {
   }
 }
