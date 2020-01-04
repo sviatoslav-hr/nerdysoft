@@ -68,7 +68,7 @@ textarea.description:focus, textarea.description:active {
 .task-description-holder {
   margin-left: -5px !important;
   margin-right: -5px !important;
-  margin-bottom: 5px !important;
+  margin-bottom: 0;
 }
 
 .task-last-edit {
