@@ -39,12 +39,18 @@ public class TaskSharingServiceImpl implements TaskSharingService {
         Task task = taskService.findById(taskId);
         User receiver = userService.findByEmail(receiverEmail);
         User sender = authenticationService.getAuthenticatedUser();
+        if (receiver.getId().equals(sender.getId())) {
+            return null;
+        }
         TaskSharing taskSharing = TaskSharing.builder()
                 .receiver(receiver)
                 .sender(sender)
                 .task(task)
                 .dateTime(LocalDateTime.now())
                 .build();
+        if (task.getUsers().contains(receiver)) {
+            return taskSharingRepository.findByReceiverAndTask(receiver, task);
+        }
         taskSharing = taskSharingRepository.save(taskSharing);
         task.getUsers().add(receiver);
         taskService.save(task);
@@ -65,5 +71,10 @@ public class TaskSharingServiceImpl implements TaskSharingService {
         task.getUsers().remove(receiver);
         taskService.save(task);
         taskSharingRepository.deleteByReceiverAndTask(receiver, task);
+    }
+
+    @Override
+    public void deleteAllByTaskId(String taskId) {
+        taskSharingRepository.deleteAllByTaskId(taskId);
     }
 }

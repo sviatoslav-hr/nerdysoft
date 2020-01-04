@@ -25,6 +25,6 @@ public class TaskSharingDto {
     }
 
     public static TaskSharingDto of(TaskSharing task) {
-        return new TaskSharingDto(task);
+        return task == null ? null : new TaskSharingDto(task);
     }
 }

@@ -13,4 +13,6 @@ public interface TaskSharingService {
     void acceptTask(String taskId);
 
     void declineTask(String taskId);
+
+    void deleteAllByTaskId(String taskId);
 }

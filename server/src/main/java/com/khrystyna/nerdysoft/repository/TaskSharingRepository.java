@@ -11,5 +11,9 @@ public interface TaskSharingRepository extends MongoRepository<TaskSharing, Stri
 
     List<TaskSharing> findAllByReceiverOrderByDateTimeDesc(User receiver);
 
+    TaskSharing findByReceiverAndTask(User receiver, Task task);
+
     void deleteByReceiverAndTask(User receiver, Task task);
+
+    void deleteAllByTaskId(String taskId);
 }
