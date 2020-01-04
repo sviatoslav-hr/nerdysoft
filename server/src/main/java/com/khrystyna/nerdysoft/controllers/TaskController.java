@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @RestController
-@RequestMapping(value = "/task")
+@RequestMapping(value = "/tasks")
 public class TaskController {
     private final TaskService taskService;
     private final TaskSharingService taskSharingService;
