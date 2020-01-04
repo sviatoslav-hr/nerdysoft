@@ -31,19 +31,18 @@
       </button>
     </div>
     <div class="m-1 py-1 px-2 border border-secondary rounded">
-      <p class="task-title  border-bottom border-secondary text-dark">{{task.title}}</p>
-      <p>{{task.id}}</p>
-      <p class="description">{{task.description}}</p>
-      <p class="text-secondary task-last-edit">
+      <p class="task-title border-bottom border-secondary text-dark">{{task.title}}</p>
+      <p class="description p-1 bg-light text-secondary">{{task.description}}</p>
+      <p class="text-muted task-last-edit">
         <span class="text-primary task-author">{{task.author.username}}</span>,
         last edit: {{task.dateTime | date:'short'}}
       </p>
-      <button *ngIf="!task.share" class="btn btn-outline-primary" (click)="task.share = true">
-        Share task
+      <button *ngIf="!task.share" class="btn btn-outline-primary mt-1 py-0 px-2" (click)="task.share = true">
+        Share <fa-icon [icon]="icons.faShare"></fa-icon>
       </button>
-      <div *ngIf="task.share" class="px-2 border-top border-secondary">
+      <div *ngIf="task.share" class="px-2 border-top border-secondary pt-2">
         <input type="email" class="form-control" aria-label="share to" #emailToShare placeholder="Type email...">
-        <button class="btn btn-outline-primary" (click)="shareTask(task.id, emailToShare.value)">
+        <button class="btn btn-outline-primary py-0 px-2" (click)="shareTask(task.id, emailToShare.value)">
           Share
         </button>
         <button class="btn btn-link text-secondary" (click)="task.share = false">

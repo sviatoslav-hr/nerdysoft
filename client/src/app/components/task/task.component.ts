@@ -4,7 +4,7 @@ import {TaskService} from '../../services/task.service';
 import {AuthenticationService} from '../../services/authentication/authentication.service';
 import {Task} from 'src/app/models/entity/task';
 import {TaskSharing} from '../../models/entity/task-sharing';
-import {faCheck, faEdit, faTimes} from '@fortawesome/free-solid-svg-icons';
+import {faCheck, faEdit, faShare, faTimes} from '@fortawesome/free-solid-svg-icons';
 import * as deepEqual from 'deep-equal';
 
 @Component({
@@ -16,7 +16,8 @@ export class TaskComponent implements OnInit {
   icons = {
     faTimes,
     faCheck,
-    faEdit
+    faEdit,
+    faShare
   };
   taskForm: TaskForm;
   tasks: Task[];
