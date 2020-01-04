@@ -14,6 +14,7 @@ import {User} from '../../models/entity/user';
 })
 export class AuthenticationService {
   private signedInUser: User;
+  private isSigningIn = false;
 
   constructor(
     private http: HttpClient
@@ -24,21 +25,27 @@ export class AuthenticationService {
     return this.signedInUser;
   }
 
-  public get isLogged(): boolean {
+  public get authenticated(): boolean {
     return !!this.user;
   }
 
-  public requestSignedInPrincipal(): void {
+  public get signingIn(): boolean {
+    return this.isSigningIn;
+  }
+
+  public requestAuthenticatedUser(): void {
+    this.isSigningIn = true;
     this.requestPrincipal();
   }
 
   private requestPrincipal(): void {
     if (!this.signedInUser) {
       this.getAuthenticatedUser().subscribe(principal => {
+        this.isSigningIn = false;
         this.signedInUser = principal;
       }, () => {
-        setTimeout(() => this.requestPrincipal(),
-          5000);
+        this.isSigningIn = false;
+        setTimeout(() => this.requestPrincipal(), 5000);
       });
     }
   }

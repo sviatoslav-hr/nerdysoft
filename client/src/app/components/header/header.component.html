@@ -2,7 +2,7 @@
   <div class="container">
     <button routerLink="/" class="btn btn-link text-light mr-2 logo text-decoration-none">Nerdysoft</button>
     <div class="float-right h-100 d-inline-block align-middle">
-      <div *ngIf="!authService.isLogged; else logOutBtn">
+      <div *ngIf="!authService.authenticated; else logOutBtn">
         <button (click)="showAuthModal(true)" class="btn btn-link text-light py-1">
           Sign In
         </button>

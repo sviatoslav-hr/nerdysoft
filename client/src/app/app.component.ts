@@ -16,7 +16,7 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     if (StorageHelper.token) {
-      this.authService.requestSignedInPrincipal();
+      this.authService.requestAuthenticatedUser();
     }
   }
 }

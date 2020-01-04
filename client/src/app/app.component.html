@@ -1,5 +1,29 @@
 <app-header></app-header>
 
-<router-outlet></router-outlet>
+<div class="container-fluid" *ngIf="authService.authenticated; else notLoggedBlock">
+  <router-outlet></router-outlet>
+</div>
 
-<app-authentication *ngIf="!authService.isLogged"></app-authentication>
+<ng-template #notLoggedBlock>
+  <div class="jumbotron jumbotron-fluid" *ngIf="!authService.signingIn; else signingInBlock">
+    <div class="container">
+      <h1 class="display-4">Not signed in</h1>
+      <p class="lead">Please sign in or sign up to continue.</p>
+    </div>
+  </div>
+
+  <ng-template #signingInBlock>
+    <div class="jumbotron jumbotron-fluid">
+      <div class="container">
+        <h1 class="display-4">Signing in...</h1>
+        <p class="lead text-center">
+          <span class="spinner-border spinner-border-sm" role="status">
+            <span class="sr-only">Loading...</span>
+          </span>
+        </p>
+      </div>
+    </div>
+  </ng-template>
+</ng-template>
+
+<app-authentication *ngIf="!authService.authenticated"></app-authentication>

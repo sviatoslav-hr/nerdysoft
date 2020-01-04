@@ -66,10 +66,14 @@ export class TaskComponent implements OnInit {
         this.sharedTasks = sharedTasks;
         this.getTasks();
       }
-      setTimeout(() => this.getSharedTasks(), 5000);
+      if (this.authenticationService.authenticated) {
+        setTimeout(() => this.getSharedTasks(), 5000);
+      }
     }, error => {
       console.log(error);
-      setTimeout(() => this.getSharedTasks(), 5000);
+      if (this.authenticationService.authenticated) {
+        setTimeout(() => this.getSharedTasks(), 5000);
+      }
     });
   }
 
