@@ -19,7 +19,7 @@ export class TaskComponent implements OnInit {
     faEdit,
     faShare
   };
-  taskForm: TaskForm;
+  newTaskForm: TaskForm;
   editTaskForm: TaskForm;
   tasks: Task[];
   sharedTasks: TaskSharing[];
@@ -29,7 +29,6 @@ export class TaskComponent implements OnInit {
     private taskService: TaskService,
     private authenticationService: AuthenticationService
   ) {
-    this.taskForm = new TaskForm();
   }
 
   ngOnInit() {
@@ -37,14 +36,16 @@ export class TaskComponent implements OnInit {
   }
 
   private saveTask() {
-    this.taskForm.title = this.taskForm.title.trim();
-    this.taskForm.description = this.taskForm.description.trim();
-    this.taskForm.authorId = this.authenticationService.user.id;
-    this.taskService.save(this.taskForm).subscribe(value => {
+    this.newTaskForm.title = this.newTaskForm.title.trim();
+    this.newTaskForm.description = this.newTaskForm.description.trim();
+    this.newTaskForm.authorId = this.authenticationService.user.id;
+    this.taskService.save(this.newTaskForm).subscribe(value => {
+      this.tasks.unshift(value);
+      this.clearNewTask();
       console.log(value);
       this.getTasks();
     }, error => console.log(error));
-    this.taskForm = new TaskForm();
+    this.newTaskForm = new TaskForm();
   }
 
   private getTasks() {
@@ -93,10 +94,11 @@ export class TaskComponent implements OnInit {
     });
   }
 
-  private shareTask(taskId: string, receiverEmail: string) {
-    this.taskService.share({taskId, receiverEmail}).subscribe(data => {
+  private shareTask(task: Task, receiverEmail: string) {
+    this.taskService.share({taskId: task.id, receiverEmail}).subscribe(data => {
       console.log(data);
     }, error => console.log(error));
+    task.share = false;
   }
 
   private acceptTask(taskId: string) {
@@ -125,5 +127,18 @@ export class TaskComponent implements OnInit {
     task.edit = false;
     this.editTaskForm = null;
     this.isTaskEditing = false;
+  }
+
+  clearNewTask() {
+    this.newTaskForm = null;
+  }
+
+  setUpNewTask() {
+    this.newTaskForm = new TaskForm();
+  }
+
+  isNewTaskFormValid(): boolean {
+    return this.newTaskForm.description && this.newTaskForm.title
+      && !!this.newTaskForm.description.trim() && !!this.newTaskForm.title.trim();
   }
 }

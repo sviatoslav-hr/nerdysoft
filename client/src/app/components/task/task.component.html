@@ -1,31 +1,69 @@
-<div class="input-group container">
-  <input type="text" class="form-control" [(ngModel)]="taskForm.title" aria-label="Title"><br>
-  <textarea type="text" class="form-control" [(ngModel)]="taskForm.description" aria-label="Description"></textarea>
-  <button class="btn" (click)="saveTask()">Save</button>
-</div>
-
 <!-- shared tasks container -->
-<div class="row container-fluid mx-0 px-3" *ngIf="sharedTasks">
-  <div *ngFor="let sharedTask of sharedTasks" class="col-12 col-md-6 p-1">
-    <p><b>{{sharedTask.sender.username}}</b> has shared task with you:</p>
-    <p>
-      <b>{{sharedTask.task.title}}</b>
-    </p>
-    <p>
-      <button class="btn btn-outline-success" (click)="acceptTask(sharedTask.task.id)">
-        Accept
-        <fa-icon [icon]="icons.faCheck"></fa-icon>
-      </button>
-      <button class="ml-1 btn btn-outline-danger" (click)="declineTask(sharedTask.task.id)">
-        Decline
-        <fa-icon [icon]="icons.faTimes"></fa-icon>
-      </button>
-    </p>
+<div class="row container-fluid mt-3 mx-0 px-3"
+     *ngIf="sharedTasks &&  sharedTasks.length > 0">
+  <div *ngFor="let sharedTask of sharedTasks" class="col-12 col-md-6 col-xl-4 p-1">
+    <div class="alert alert-info m-0 py-2">
+      <p class="lead my-1"><b>{{sharedTask.sender.username}}</b> has shared task with you:</p>
+      <p class="lead my-1">
+        <b>"{{sharedTask.task.title}}"</b>
+      </p>
+      <p class="mb-1">
+        <button class="btn btn-success py-1 px-2" (click)="acceptTask(sharedTask.task.id)">
+          Accept
+          <fa-icon [icon]="icons.faCheck"></fa-icon>
+        </button>
+        <button class="ml-1 btn btn-danger py-1 px-2" (click)="declineTask(sharedTask.task.id)">
+          Decline
+          <fa-icon [icon]="icons.faTimes"></fa-icon>
+        </button>
+      </p>
+
+    </div>
   </div>
 </div>
 
+<p class="my-2">
+  <button class="btn btn-success" (click)="setUpNewTask()">Add task</button>
+</p>
+
 <!-- tasks container -->
-<div class="row container-fluid mx-0 mt-2 px-3 pb-1 task-container" *ngIf="tasks">
+<div class="row container-fluid mx-0 px-3 pb-1 task-container" *ngIf="(tasks && tasks.length > 0) || newTaskForm">
+  <!--  <div *ngIf="tasks.length === 0" class="alert alert-light lead my-3 ml-3">Add few tasks</div>-->
+  <!-- new task -->
+  <div class="col-12 col-md-6 col-xl-4 p-0" *ngIf="newTaskForm">
+    <div class="task-buttons">
+      <button class="ml-1 btn btn-outline-danger delete-task-button" (click)="clearNewTask()">
+        <fa-icon [icon]="icons.faTimes"></fa-icon>
+      </button>
+    </div>
+    <!-- task body -->
+    <div class="m-1 py-1 px-2 task-card-body pb-2">
+      <!-- title -->
+      <p class="new-task-title-holder">
+        <input type="text" class="task-title mb-2" aria-label="task title" autofocus placeholder="Task title"
+               [(ngModel)]="newTaskForm.title">
+      </p>
+      <!-- description -->
+      <p class="task-description-holder">
+        <textarea class="description text-secondary py-1 px-2 rounded border-0 w-100"
+                  aria-label="task description" [(ngModel)]="newTaskForm.description"
+                  [rows]="newTaskForm.description? newTaskForm.description.split('\n').length: 1"
+                  placeholder="Description"></textarea>
+      </p>
+      <!-- edit task buttons -->
+      <div>
+        <button class="btn btn-outline-success mt-1 py-0 px-2 d-inline"
+                (click)="saveTask()" [disabled]="!isNewTaskFormValid()">
+          Save
+        </button>
+        <button class="btn btn-link text-secondary px-2 py-0" (click)="clearNewTask()">
+          Cancel
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- tasks list -->
   <div *ngFor="let task of tasks" class="col-12 col-md-6 col-xl-4 p-0">
     <div class="task-buttons">
       <button class="ml-1 btn btn-outline-secondary edit-task-button" [disabled]="isTaskEditing"
@@ -40,20 +78,24 @@
     <!-- task body -->
     <div class="m-1 py-1 px-2 task-card-body pb-2">
       <!-- title -->
-      <p *ngIf="!task.edit" class="task-title border-bottom border-secondary mb-2">{{task.title}}</p>
+      <p *ngIf="!task.edit" class="task-title border-bottom border-secondary mb-2" (dblclick)="editTask(task)">
+        {{task.title}}
+      </p>
       <p *ngIf="task.edit" class="task-title-holder">
         <input type="text" class="task-title mb-2" aria-label="task title" autofocus
                [(ngModel)]="editTaskForm.title">
       </p>
       <!-- description -->
-      <p *ngIf="!task.edit" class="description text-secondary py-1 px-2 rounded">{{task.description}}</p>
+      <p *ngIf="!task.edit" class="description text-secondary py-1 px-2 rounded" (dblclick)="editTask(task)">
+        {{task.description}}
+      </p>
       <p class="task-description-holder" *ngIf="task.edit">
         <textarea class="description text-secondary py-1 px-2 rounded border-0 w-100"
                   aria-label="task description" [(ngModel)]="editTaskForm.description"
                   [rows]="editTaskForm.description.split('\n').length"></textarea>
       </p>
       <!-- author & last edit time -->
-      <div  class="text-muted task-last-edit d-inline-block">
+      <div class="text-muted task-last-edit d-inline-block">
         <span class="text-primary task-author">{{task.author.username}}</span>,
         <div class="d-block">last edit: {{task.dateTime | date:'short'}}</div>
       </div>
@@ -78,8 +120,8 @@
         </button>
         <div *ngIf="task.share" class="px-2 border-top border-secondary pt-2">
           <input type="email" class="form-control mb-1" aria-label="share to" #shareInput placeholder="Type email...">
-          <button class="btn btn-outline-primary py-0 px-2" [disabled]="!shareInput.checkValidity()"
-                  (click)="shareTask(task.id, shareInput.value)">
+          <button class="btn btn-primary py-0 px-2" [disabled]="!shareInput.checkValidity()"
+                  (click)="shareTask(task, shareInput.value)">
             Share
           </button>
           <button class="btn btn-link text-secondary px-2 py-0" (click)="task.share = false">

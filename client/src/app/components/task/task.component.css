@@ -14,9 +14,10 @@
 }
 
 .task-title {
-   color: #343a40;
-   font-size: 16pt;
- }
+  color: #343a40;
+  font-size: 16pt;
+  background: none;
+}
 
 p.task-title {
   margin-right: 75px;
@@ -80,12 +81,13 @@ textarea.description:focus, textarea.description:active {
   -moz-column-width: 19em;
   -webkit-column-width: 19em;
   -moz-column-gap: 1em;
-  -webkit-column-gap:1em;
+  -webkit-column-gap: 1em;
 }
+
 .row.make-columns > div {
   display: inline-block;
-  padding:  .5rem;
-  width:  100%;
+  padding: .5rem;
+  width: 100%;
 }
 
 .task-card-body {
@@ -94,4 +96,9 @@ textarea.description:focus, textarea.description:active {
 
 .task-container {
   background-color: aquamarine;
+}
+
+p.new-task-title-holder {
+  margin: 0;
+  padding: 0 36px 0 0;
 }
