@@ -1,6 +1,6 @@
 <!-- shared tasks container -->
-<div class="row container-fluid mt-3 mx-0 px-3"
-     *ngIf="sharedTasks &&  sharedTasks.length > 0">
+<div class="row container-fluid mt-2 mx-0 px-3"
+     *ngIf="sharedTasks &&  sharedTasks.length > 0 && !isTaskShareLoading">
   <div *ngFor="let sharedTask of sharedTasks" class="col-12 col-md-6 col-xl-4 p-1">
     <div class="alert alert-info m-0 py-2">
       <p class="lead my-1"><b>{{sharedTask.sender.username}}</b> has shared task with you:</p>
@@ -13,14 +13,19 @@
           <fa-icon [icon]="icons.faCheck"></fa-icon>
         </button>
         <button class="ml-1 btn btn-danger py-1 px-2" (click)="declineTask(sharedTask.task.id)">
-          Decline
+          Cancel
           <fa-icon [icon]="icons.faTimes"></fa-icon>
         </button>
       </p>
-
     </div>
   </div>
 </div>
+
+<p *ngIf="isTaskShareLoading" class="lead text-center">
+  <span class="spinner-border spinner-border-sm" role="status">
+    <span class="sr-only">Loading...</span>
+  </span>
+</p>
 
 <p class="my-2">
   <button class="btn btn-success" (click)="setUpNewTask()">Add task</button>
@@ -70,7 +75,8 @@
               (click)="editTask(task)">
         <fa-icon [icon]="icons.faEdit"></fa-icon>
       </button>
-      <button class="ml-1 btn btn-outline-danger delete-task-button" (click)="deleteTask(task.id)">
+      <button class="ml-1 btn btn-outline-danger delete-task-button" [disabled]="isTaskEditing"
+              (click)="deleteTask(task.id)">
         <fa-icon [icon]="icons.faTimes"></fa-icon>
       </button>
     </div>
@@ -129,7 +135,6 @@
           </button>
         </div>
       </div>
-
     </div>
   </div>
 </div>
