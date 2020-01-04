@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'http://localhost:8080'
+  apiUrl: 'https://damp-eyrie-79902.herokuapp.com:8080'
 };
 
 /*

@@ -8,10 +8,10 @@ import com.khrystyna.nerdysoft.services.interfaces.AuthenticationService;
 import com.khrystyna.nerdysoft.services.interfaces.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.LinkedList;
+import java.util.List;
 
 @Slf4j
 @RestController
@@ -23,6 +23,17 @@ public class AuthenticationController {
     public AuthenticationController(UserService userService, AuthenticationService authenticationService) {
         this.userService = userService;
         this.authenticationService = authenticationService;
+    }
+    
+    @GetMapping("/test")
+    public ResponseEntity<Object> test() {
+        List<String> list = new LinkedList<>();
+        list.add("her");
+        list.add("tobi");
+        list.add("a");
+        list.add("ne");
+        list.add("deploy");
+        return ResponseEntity.ok(list);
     }
 
     @PostMapping("/sign-in")

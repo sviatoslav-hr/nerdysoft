@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "nerdysoft-dd863": {
+      "hosting": {
+        "client": [
+          "nerdysoft-dd863"
+        ]
+      }
+    }
+  }
+}
