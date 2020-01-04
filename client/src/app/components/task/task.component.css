@@ -13,24 +13,62 @@
   padding: 2px 8px;
 }
 
-.description {
-  white-space: pre-wrap;
-  background-color: lightgray;
-  margin-left: -5px;
-  margin-right: -5px;
-  margin-bottom: 5px;
-}
-
 .task-title {
+   color: #343a40;
+   font-size: 16pt;
+ }
+
+p.task-title {
   margin-right: 75px;
-  font-size: 16pt;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
 }
 
-.task-author {
-  /*font-size: 8pt;*/
+p.task-title-holder {
+  margin: 0;
+  padding: 0 75px 0 0;
+}
+
+input.task-title {
+  padding: 0;
+  border: none;
+  border-bottom: 1px solid #6c757d !important;
+  width: 100%;
+}
+
+input.task-title:focus, input.task-title:active {
+  box-shadow: none;
+  outline: none;
+}
+
+.description {
+  background-color: lightgray;
+}
+
+p.description {
+  white-space: pre-wrap;
+  margin-left: -5px !important;
+  margin-right: -5px !important;
+  margin-bottom: 5px !important;
+}
+
+textarea.description {
+  resize: none;
+  overflow: hidden;
+  min-height: 32px;
+  max-height: 320px;
+}
+
+textarea.description:focus, textarea.description:active {
+  box-shadow: none;
+  outline: none;
+}
+
+.task-description-holder {
+  margin-left: -5px !important;
+  margin-right: -5px !important;
+  margin-bottom: 5px !important;
 }
 
 .task-last-edit {

@@ -40,9 +40,18 @@
     <!-- task body -->
     <div class="m-1 py-1 px-2 task-card-body pb-2">
       <!-- title -->
-      <p class="task-title border-bottom border-secondary text-dark mb-2">{{task.title}}</p>
+      <p *ngIf="!task.edit" class="task-title border-bottom border-secondary mb-2">{{task.title}}</p>
+      <p *ngIf="task.edit" class="task-title-holder">
+        <input type="text" class="task-title mb-2" aria-label="task title" autofocus
+               [(ngModel)]="editTaskForm.title">
+      </p>
       <!-- description -->
-      <p class="description text-secondary py-1 px-2 rounded">{{task.description}}</p>
+      <p *ngIf="!task.edit" class="description text-secondary py-1 px-2 rounded">{{task.description}}</p>
+      <p class="task-description-holder" *ngIf="task.edit">
+        <textarea class="description text-secondary py-1 px-2 rounded border-0 w-100"
+                  aria-label="task description" [(ngModel)]="editTaskForm.description"
+                  [rows]="editTaskForm.description.split('\n').length"></textarea>
+      </p>
       <!-- author & last edit time -->
       <div class="text-muted task-last-edit d-inline-block">
         <span class="text-primary task-author">{{task.author.username}}</span>,

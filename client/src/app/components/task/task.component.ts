@@ -37,6 +37,8 @@ export class TaskComponent implements OnInit {
   }
 
   private saveTask() {
+    this.taskForm.title = this.taskForm.title.trim();
+    this.taskForm.description = this.taskForm.description.trim();
     this.taskForm.authorId = this.authenticationService.user.id;
     this.taskService.save(this.taskForm).subscribe(value => {
       console.log(value);
@@ -62,6 +64,10 @@ export class TaskComponent implements OnInit {
   }
 
   private saveEditedTask(task: Task) {
+    this.editTaskForm.title = this.editTaskForm.title.trim();
+    this.editTaskForm.description = this.editTaskForm.description.trim();
+    task.title = this.editTaskForm.title;
+    task.description = this.editTaskForm.description;
     this.taskService.save(this.editTaskForm).subscribe(editedTask => {
       console.log(editedTask);
       this.cancelTaskEditing(task);
@@ -115,7 +121,7 @@ export class TaskComponent implements OnInit {
     this.isTaskEditing = true;
   }
 
-  cancelTaskEditing(task: Task) {
+  private cancelTaskEditing(task: Task) {
     task.edit = false;
     this.editTaskForm = null;
     this.isTaskEditing = false;
