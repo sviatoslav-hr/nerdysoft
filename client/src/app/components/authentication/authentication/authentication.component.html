@@ -1,8 +1,8 @@
 <div class="modal fade" tabindex="-1" role="dialog"
-     [ngClass]="{'show':modalService.isAuthenticationDisplayed}"
+     [ngClass]="{'show':ms.isAuthenticationDisplayed}"
      aria-labelledby="modalCenterTitle" aria-hidden="true" (mousedown)="close()">
   <div class="modal-dialog modal-dialog-centered" role="document" (mousedown)="$event.stopPropagation()">
-    <div class="modal-content" *ngIf="modalService.isAuthenticationDisplayed">
+    <div class="modal-content" *ngIf="ms.isAuthenticationDisplayed">
       <div class="modal-header">
         <h5 class="modal-title w-100 text-left" id="modalCenterTitle">
           {{isSignedUp ? 'Sign In' : 'Sign Up'}}

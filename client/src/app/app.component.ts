@@ -10,13 +10,17 @@ import {StorageHelper} from './helpers/storage-helper';
 export class AppComponent implements OnInit {
 
   constructor(
-    private authService: AuthenticationService
+    private authenticationService: AuthenticationService
   ) {
+  }
+
+  get authService(): AuthenticationService {
+    return this.authenticationService;
   }
 
   ngOnInit(): void {
     if (StorageHelper.token) {
-      this.authService.requestAuthenticatedUser();
+      this.authenticationService.requestAuthenticatedUser();
     }
   }
 }

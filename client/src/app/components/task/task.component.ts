@@ -36,7 +36,7 @@ export class TaskComponent implements OnInit {
     this.getSharedTasks();
   }
 
-  private saveTask() {
+  saveTask() {
     this.newTaskForm.title = this.newTaskForm.title.trim();
     this.newTaskForm.description = this.newTaskForm.description.trim();
     this.newTaskForm.authorId = this.authenticationService.user.id;
@@ -48,7 +48,7 @@ export class TaskComponent implements OnInit {
     this.newTaskForm = new TaskForm();
   }
 
-  private getTasks() {
+  getTasks() {
     this.taskService.getAll().subscribe(
       value => {
         value.forEach(task => task.dateTime = new Date(task.dateTime));
@@ -57,24 +57,24 @@ export class TaskComponent implements OnInit {
       error => console.log(error));
   }
 
-  private deleteTask(taskId: string) {
-    this.taskService.delete(taskId).subscribe(deletedTask => {
+  deleteTask(taskId: string) {
+    this.taskService.delete(taskId).subscribe(() => {
       this.getTasks();
     }, error => console.log(error));
   }
 
-  private saveEditedTask(task: Task) {
+  saveEditedTask(task: Task) {
     this.editTaskForm.title = this.editTaskForm.title.trim();
     this.editTaskForm.description = this.editTaskForm.description.trim();
     task.title = this.editTaskForm.title;
     task.description = this.editTaskForm.description;
-    this.taskService.save(this.editTaskForm).subscribe(editedTask => {
+    this.taskService.save(this.editTaskForm).subscribe(() => {
       this.cancelTaskEditing(task);
       this.getTasks();
     }, error => console.log(error));
   }
 
-  private getSharedTasks() {
+  getSharedTasks() {
     this.taskService.getAllShared().subscribe(sharedTasks => {
       sharedTasks.forEach(value => value.dateTime = new Date(value.dateTime));
       if (!this.sharedTasks || !deepEqual(this.sharedTasks, sharedTasks)) {
@@ -93,24 +93,24 @@ export class TaskComponent implements OnInit {
     });
   }
 
-  private shareTask(task: Task, receiverEmail: string) {
-    this.taskService.share({taskId: task.id, receiverEmail}).subscribe(data => {
+  shareTask(task: Task, receiverEmail: string) {
+    this.taskService.share({taskId: task.id, receiverEmail}).subscribe(() => {
     }, error => console.log(error));
     task.share = false;
   }
 
-  private acceptTask(taskId: string) {
+  acceptTask(taskId: string) {
     this.isTaskShareLoading = true;
-    this.taskService.accept(taskId).subscribe(data => {
+    this.taskService.accept(taskId).subscribe(() => {
     }, error => {
       this.isTaskShareLoading = false;
       console.log(error);
     });
   }
 
-  private declineTask(taskId: string) {
+  cancelTask(taskId: string) {
     this.isTaskShareLoading = true;
-    this.taskService.decline(taskId).subscribe(data => {
+    this.taskService.decline(taskId).subscribe(() => {
       this.getTasks();
     }, error => {
       this.isTaskShareLoading = false;
@@ -118,7 +118,7 @@ export class TaskComponent implements OnInit {
     });
   }
 
-  private editTask(task: Task) {
+  editTask(task: Task) {
     task.edit = true;
     this.editTaskForm = new TaskForm();
     this.editTaskForm.id = task.id;
@@ -127,7 +127,7 @@ export class TaskComponent implements OnInit {
     this.isTaskEditing = true;
   }
 
-  private cancelTaskEditing(task: Task) {
+  cancelTaskEditing(task: Task) {
     task.edit = false;
     this.editTaskForm = null;
     this.isTaskEditing = false;

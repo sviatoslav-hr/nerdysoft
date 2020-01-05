@@ -10,9 +10,14 @@ export class HomeComponent implements OnInit {
 
   constructor(
     private authenticationService: AuthenticationService
-  ) { }
+  ) {
+  }
 
   ngOnInit() {
+  }
+
+  get authService(): AuthenticationService {
+    return this.authenticationService;
   }
 
 }

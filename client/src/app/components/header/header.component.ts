@@ -10,12 +10,16 @@ import {ModalService} from '../../services/modal.service';
 export class HeaderComponent implements OnInit {
 
   constructor(
-    private authService: AuthenticationService,
+    private authenticationService: AuthenticationService,
     private modalService: ModalService
   ) {
   }
 
   ngOnInit() {
+  }
+
+  get authService(): AuthenticationService {
+    return this.authenticationService;
   }
 
   logOut() {

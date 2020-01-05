@@ -28,4 +28,8 @@ export class AuthenticationComponent implements OnInit {
   close() {
     this.modalService.hideAuthentication();
   }
+
+  get ms(): ModalService {
+    return this.modalService;
+  }
 }
