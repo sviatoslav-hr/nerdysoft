@@ -25,7 +25,7 @@ export class SignUpComponent implements OnInit {
   ) {
     this.form = this.formBuilder.group({
       username: new FormControl('', [Validators.required,
-        Validators.pattern('(^[A-Za-z]+$)|(^[А-ЯЄІЇа-яєії]+$)')]),
+        Validators.pattern('(^[А-ЯЄІЇа-яєіїA-Za-z 0-9]+$)')]),
       email: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', [Validators.required,
         Validators.pattern('(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\\S+$).{3,}'),
